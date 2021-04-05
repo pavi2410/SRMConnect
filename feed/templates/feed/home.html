@@ -13,126 +13,111 @@
 </form>
 {% endblock %}
 {% block content %}
-<div class="container">
-  <div class="row">
-    <div class="col-md-8">
-      {% for post in posts %}
-      <div class="card card-signin my-5">
-        <div class="card-body">
-          <a href="{{ post.user_name.profile.get_absolute_url }}"
-            ><img
-              src="{{ post.user_name.profile.image.url }}"
-              class="rounded-circle"
-              width="30"
-              height="30"
-              alt=""
-          /></a>
-          <a
-            class="text-dark"
-            href="{{ post.user_name.profile.get_absolute_url }}"
-            ><b>{{ post.user_name }}</b></a
-          >
-          <br /><small class="text-muted"
-            >Posted on {{ post.date_posted }}</small
-          >
-          <br /><br />
-          <p class="card-text text-dark">{{ post.description }}</p>
-        </div>
-        <a href="{% url 'post-detail' post.id %}"
-          ><img class="card-img-top" src="{{ post.pic.url }}" alt=""
-        /></a>
-        {% if post.tags %}
-        <br />
-        <p class="text-danger ml-3">
-          <b>Tags: <i>{{ post.tags }}</i></b>
-        </p>
-        {% endif %}
-        <div class="card-footer">
-          <button class="btn btn-white mr-3 like" id="{{ post.id }}">
-            {% if post in liked_post %}
-            <a
-              href="{% url 'post-like' %}"
-              style="color: red"
-              id="likebtn{{ post.id }}"
-            >
-              Unlike</a
-            >
-            | {{post.likes.count}} {% else %}
-            <a
-              href="{% url 'post-like' %}"
-              style="color: green"
-              id="likebtn{{ post.id }}"
-            >
-              Like</a
-            >
-            | {{post.likes.count}} {% endif %}
-          </button>
-          <a class="btn btn-outline-info" href="{% url 'post-detail' post.id %}"
-            >Comments | {{ post.details.count }}</a
-          >
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
+<h1 class="large text-primary">
+  Dashboard
+</h1>
+<p class="lead"><i class="fas fa-user"></i> Welcome John Doe</p>
+<div class="dash-buttons">
+  <a href="{% url 'edit_profile' %}" class="btn">
+    <i class="fas fa-user-circle text-primary"></i> Edit Profile
+  </a>
+  <a href="{ url 'add-experience' }" class="btn">
+    <i class="fab fa-black-tie text-primary"></i> Add Experience
+  </a>
+  <a href="{ url 'add-education' }" class="btn">
+    <i class="fas fa-graduation-cap text-primary"></i> Add Education
+  </a>
 </div>
 
-{% if is_paginated %} 
-	{% if page_obj.has_previous %}
-		<a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-		<a
-		  class="btn btn-outline-info mb-4"
-		  href="?page={{ page_obj.previous_page_number }}"
-		  >Previous</a
-		>
-	{% endif %}
-	{% for num in page_obj.paginator.page_range %}
-		{% if page_obj.number == num %}
-			<a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
-		{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-			<a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
-		{% endif %}
-	{% endfor %}
+<h2 class="my-2">
+  Experience Credentials
+</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Company</th>
+      <th class="hide-sm">Title</th>
+      <th class="hide-sm">Years</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Microsoft</td>
+      <td class="hide-sm">Senior Developer</td>
+      <td class="hide-sm">
+        Oct 2011 - Current
+      </td>
+      <td>
+        <button class="btn btn-danger">
+          Delete
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>Sun Microsystems</td>
+      <td class="hide-sm">Senior Developer</td>
+      <td class="hide-sm">
+        Oct 2004 - Nov 2010
+      </td>
+      <td>
+        <button class="btn btn-danger">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-	{% if page_obj.has_next %}
-		<a
-		  class="btn btn-outline-info mb-4"
-		  href="?page={{ page_obj.next_page_number }}"
-		  >Next</a
-		>
-		<a
-		  class="btn btn-outline-info mb-4"
-		  href="?page={{ page_obj.paginator.num_pages }}"
-		  >Last</a
-		>
-	{% endif %}
+<h2 class="my-2">
+  Education Credentials
+</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>School</th>
+      <th class="hide-sm">Degree</th>
+      <th class="hide-sm">Years</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>University of Washington</td>
+      <td class="hide-sm">Masters</td>
+      <td class="hide-sm">
+        Sep 1993 - June 1999
+      </td>
+      <td>
+        <button class="btn btn-danger">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-{% endif %} 
+<div class="my-2">
+  <button class="btn btn-danger">
+    <i class="fas fa-user-minus"></i> Delete My Account
+  </button>
+</div>
+{% endblock %}
 
-{% endblock %} 
-
-{% block jsfiles %}
-<script>
-  $(".like").click(function (e) {
-    var id = this.id;
-    var href = $(".like").find("a").attr("href");
-    e.preventDefault();
-
-    $.ajax({
-      url: href,
-      data: {
-        likeId: id,
-      },
-      success: function (response) {
-        if (response.liked) {
-          $("#likebtn" + id).html("Unlike");
-          $("#likebtn" + id).css("color", "red");
-        } else {
-          $("#likebtn" + id).html("Like");
-          $("#likebtn" + id).css("color", "green");
-        }
-      },
-    });
-  });
-</script>
+{% block content_unauth %}
+<section class="landing">
+  <div class="dark-overlay">
+    <div class="landing-inner">
+      <h1 class="x-large">Developer Connector</h1>
+      <p class="lead">
+        Create developer profile/portfolio, share posts and get help from
+        other developers
+      </p>
+      <div class="buttons">
+        <a href="{% url 'register' %}" class="btn btn-primary">Sign Up</a>
+        <a href="{% url 'login' %}" class="btn btn">Login</a>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

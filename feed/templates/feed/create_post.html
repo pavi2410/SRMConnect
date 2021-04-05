@@ -2,37 +2,78 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block searchform %}
-<form class="form-inline my-2 my-lg-0 ml-5" action="{% url 'search_posts' %}" method="get">
-  <input name="p" type="text" placeholder="Search posts.." />
-  <button class="btn btn-success my-2 my-sm-0 ml-4" type="submit">
-    Search
-  </button>
-</form>
+
 {% endblock %}
 {% block content %}
-<br /><br />
-<div class="container">
-  <div class="row">
-    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-      <div class="card card-signin my-5">
-        <div class="card-body">
-          <h5 class="card-title text-center"><b>Post</b></h5>
-          <form class="form-signin" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <fieldset class="form-group">
-              <br />
-              {{ form|crispy }}
-            </fieldset>
-            <div class="form-group">
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">
-                Post</button><br />
-            </div>
-          </form>
-        </div>
+<h1 class="large text-primary">
+  Posts
+</h1>
+<p class="lead"><i class="fas fa-user"></i> Welcome to the community</p>
+
+<div class="post-form">
+  <div class="post-form-header bg-primary">
+    <h3>Say Something...</h3>
+  </div>
+  <form class="form my-1" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <textarea cols="30" rows="5" placeholder="Create a post"></textarea>
+    {{ form|crispy }}
+    <input type="submit" value="Submit" class="btn btn-dark my-1" />
+  </form>
+  <div class="posts">
+    <div class="post bg-white my-1 p-1">
+      <div>
+        <a href="profile.html">
+          <img class="round-img" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200" alt="" />
+          <h4>John Doe</h4>
+        </a>
+      </div>
+
+      <div>
+        <p class="my-1">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+          Ratione dolores officia assumenda dolor maiores sint pariatur
+          quia voluptatibus voluptate perspiciatis commodi possimus nemo
+          aut, voluptas expedita facilis amet hic culpa.
+        </p>
+        <button class="btn">
+          <i class="fas fa-thumbs-up"></i> <span>4</span>
+        </button>
+        <button class="btn">
+          <i class="fas fa-thumbs-down"></i>
+        </button>
+        <a href="post.html" class="btn btn-primary">
+          Discussion
+        </a>
+      </div>
+    </div>
+
+    <div class="post bg-white my-1 p-1">
+      <div>
+        <a href="profile.html">
+          <img class="round-img" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200" alt="" />
+          <h4>John Doe</h4>
+        </a>
+      </div>
+
+      <div>
+        <p class="my-1">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+          Ratione dolores officia assumenda dolor maiores sint pariatur
+          quia voluptatibus voluptate perspiciatis commodi possimus nemo
+          aut, voluptas expedita facilis amet hic culpa.
+        </p>
+        <button class="btn">
+          <i class="fas fa-thumbs-up"></i> <span>4</span>
+        </button>
+        <button class="btn">
+          <i class="fas fa-thumbs-down"></i>
+        </button>
+        <a href="post.html" class="btn btn-primary">
+          Discussion
+        </a>
       </div>
     </div>
   </div>
 </div>
 {% endblock %}
-{% block jsfiles %}
-{% endblock  %}

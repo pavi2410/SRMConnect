@@ -2,34 +2,25 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content_unauth %}
-<br />
-<div class="container">
-  <div class="row">
-    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-      <div class="card card-signin my-5">
-        <div class="card-body">
-          <h5 class="card-title text-center"><b>Sign In</b></h5>
-          <form class="form-signin" method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-              <br />
-              {{ form|crispy }}
-            </fieldset>
-            <div class="form-group">
-              <button
-                class="btn btn-lg btn-primary btn-block text-uppercase"
-                type="submit">Login</button>
-            </div>
-            <small>
-              <p class="text-center">
-                Not registered yet!
-                <a href="{% url 'register' %}"><b>Register Now!</b></a>
-              </p>
-            </small>
-          </form>
-        </div>
-      </div>
+<section class="container">
+  <!-- Alert -->
+  <!-- <div class="alert alert-danger">
+    Invalid Credentials
+  </div> -->
+
+  <h1 class="large text-primary">
+    Sign In
+  </h1>
+  <p class="lead"><i class="fas fa-user"></i> Sign into your account</p>
+  <form method="POST" class="form">
+    {% csrf_token %}
+    <div class="form-group">
+      {{ form|crispy }}
     </div>
-  </div>
-</div>
+    <input type="submit" value="Login" class="btn btn-primary" />
+  </form>
+  <p class="my-1">
+    Don't have an account? <a href="{% url 'register' %}">Sign Up</a>
+  </p>
+</section>
 {% endblock %}

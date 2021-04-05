@@ -1,29 +1,40 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <link rel="icon" type="image/png" href="https://dl.dropboxusercontent.com/s/o093y16u4d3kojv/code.png?dl=0" />
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" />
-  <link rel="stylesheet" type="text/css" href="https://dl.dropboxusercontent.com/s/ecyb1drs5j1jyjf/styles.css?dl=0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="{% static 'feed/style.css' %}">
   {% block cssfiles %}{% endblock cssfiles %}
-  <title>SRM Connect</title>
+  <title>Welcome to the DevConnector</title>
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    <a class="navbar-brand ml-4 mr-4" href="#"><b>SRM Connect</b></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+    <h1>
+      <a class="navbar-brand ml-4 mr-4" href="{% url 'home' %}"><i class="fas fa-code"></i> SRM Connect</a>
+    </h1>
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-    </button>
+    </button> -->
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
+        {% if user.is_authenticated %}
+        <form class="form-inline" action="{% url 'search_posts' %}" method="GET">
+          <input class="form-control" name="input" type="text" placeholder="Search posts.." />
+          <button class="btn" type="submit">
+            Search
+          </button>
+        </form>
+        {% endif %}
         <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
         <a class="nav-item nav-link" href="{% url 'users_list' %}">Add New Friends</a>
         {% if user.is_authenticated %}
@@ -32,35 +43,51 @@
         <a class="nav-item nav-link" href="{% url 'post-create' %}">Create Post</a>
         <a class="nav-item nav-link btn btn-danger ml-4 text-light" href="{% url 'logout' %}">Logout</a>
         {% else %}
-        <a class="nav-item nav-link btn btn-success ml-4 text-light" href="{% url 'login' %}">Login</a>
-        <a class="nav-item nav-link btn btn-info ml-3 text-light" href="{% url 'register' %} ">Register</a>
+        <a class="nav-item nav-link ml-4 text-light" href="{% url 'login' %}">Login</a>
+        <a class="nav-item nav-link ml-3 text-light" href="{% url 'register' %} ">Register</a>
         {% endif %}
         {% if user.is_authenticated %}
-        {% block searchform %}{% endblock searchform %}
         {% endif %}
       </div>
     </div>
   </nav>
 
-  <div class="container">
-    {% if user.is_authenticated %}
-    {% block content %}{% endblock content %}
-    {% else %}
-    {% block content_unauth %}{% endblock content_unauth %}
-    {% endif %}
-  </div>
-
-  <footer class="page-footer font-small black">
-    <div class="footer-copyright text-center py-3">
-      SRM Connect © 2021 <br /><small class="text-muted">All rights reserved!</small>
-    </div>
-  </footer>
+  
+  {% if user.is_authenticated %}
+  <section class="container">
+  {% block content %}{% endblock content %}
+  </section>
+  {% else %}
+  {% block content_unauth %}{% endblock content_unauth %}
+  {% endif %}
 
   <!-- JS Files -->
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  {% block jsfiles %}{% endblock jsfiles %}
+  <script>
+    $(".like").click(function (e) {
+      var id = this.id;
+      var href = $(".like").find("a").attr("href");
+      e.preventDefault();
+
+      $.ajax({
+        url: href,
+        data: {
+          likeId: id,
+        },
+        success: function (response) {
+          if (response.liked) {
+            $("#likebtn" + id).html("Unlike | {{post.likes.count}}");
+            $("#likebtn" + id).css("color", "red");
+          } else {
+            $("#likebtn" + id).html("Like | {{post.likes.count}}");
+            $("#likebtn" + id).css("color", "green");
+          }
+        },
+      });
+    });
+  </script>
 </body>
 
 </html>

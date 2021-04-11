@@ -1,17 +1,5 @@
 {% extends "feed/layout.html" %}
 {% load static %}
-{% block searchform %}
-<form
-  class="form-inline my-2 my-lg-0 ml-5"
-  action="{% url 'search_posts' %}"
-  method="get"
->
-  <input name="p" type="text" placeholder="Search posts.." />
-  <button class="btn btn-success my-2 my-sm-0 ml-4" type="submit">
-    Search
-  </button>
-</form>
-{% endblock %}
 {% block content %}
 <h1 class="large text-primary">
   Dashboard
@@ -96,6 +84,34 @@
     </tr>
   </tbody>
 </table>
+
+<div class="posts">
+  {% for post in posts %}
+  <div class="post bg-white p-1 my-1">
+    <div>
+      <a href="{{ post.user_name.profile.get_absolute_url }}">
+        <img class="round-img" src="https://www.europe-together.eu/wp-content/themes/sd/images/user-placeholder.svg" alt="" />
+        <h4>{{ post.user_name }}</h4>
+      </a>
+    </div>
+    <div>
+      <p class="my-1">{{ post.description }}</p>
+      <br /><small class="text-muted">Posted on {{ post.date_posted }}</small>
+      <br />
+      <a href="{% url 'post-detail' post.id %}"><img class="card-img-top" src="{{ post.pic.url }}" alt="" /></a>
+    </div>
+    <div class="post-form">
+      <div class="post-form-header bg-primary">
+        <h3>Leave A Comment</h3>
+      </div>
+      <form class="form my-1">
+        <textarea name="text" cols="30" rows="5" placeholder="Comment on this post"></textarea>
+        <input type="submit" class="btn btn-dark my-1" value="Submit" />
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 
 <div class="my-2">
   <button class="btn btn-danger">

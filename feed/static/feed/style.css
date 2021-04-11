@@ -654,3 +654,24 @@ img {
 .form-inline > input.form-control {
   padding: .5rem;
 }
+
+.card-signin {
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+}
+
+.card-signin > img {
+  height: 64px !important;
+  width: 64px !important;
+  border-radius: 50%;
+  border: 0;
+}
+
+.float-left {
+  float: left;
+}
+
+.mr-2 {
+  margin-right: 1rem;
+}

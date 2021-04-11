@@ -1,7 +1,7 @@
 {% extends "feed/layout.html" %}
 {% load static %}
 {% block content %}
-<a href="profiles.html" class="btn">Back To Profiles</a>
+<a href="{% url 'users_list' %}" class="btn">Back To Profiles</a>
 
 <div class="profile-grid my-1">
   <!-- Top -->

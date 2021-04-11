@@ -29,7 +29,7 @@
       <div class="navbar-nav">
         {% if user.is_authenticated %}
         <form class="form-inline" action="{% url 'search_posts' %}" method="GET">
-          <input class="form-control" name="input" type="text" placeholder="Search posts.." />
+          <input class="form-control" name="p" type="text" placeholder="Search posts.." />
           <button class="btn" type="submit">
             Search
           </button>

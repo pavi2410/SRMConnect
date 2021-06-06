@@ -11,10 +11,11 @@ from autoslug import AutoSlugField
 
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	image = models.ImageField(default='default.png', upload_to='profile_pics')
+	image = models.ImageField(default='default.png', upload_to='profile_pics', blank=True)
 	slug = AutoSlugField(populate_from='user')
-	bio = models.CharField(max_length=255, blank=True)
+	bio = models.CharField(max_length=140, blank=True)
 	friends = models.ManyToManyField("Profile", blank=True)
+	location = models.CharField(max_length=140, blank=True) 
 
 	def __str__(self):
 		return str(self.user.username)

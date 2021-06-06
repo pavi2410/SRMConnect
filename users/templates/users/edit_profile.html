@@ -10,7 +10,7 @@
   profile stand out
 </p>
 <small>* = required fields</small>
-<form class="form">
+<form class="form" method="POST">
   {% csrf_token %}
   <div class="form-group">
     {{ u_form|crispy }}
@@ -37,10 +37,6 @@
   <div class="form-group">
     <input type="text" placeholder="Website" name="website" />
     <small class="form-text">Could be your own or a company website</small>
-  </div>
-  <div class="form-group">
-    <input type="text" placeholder="Location" name="location" />
-    <small class="form-text">City & state suggested (eg. Boston, MA)</small>
   </div>
   <div class="form-group">
     <input type="text" placeholder="* Skills" name="skills" />

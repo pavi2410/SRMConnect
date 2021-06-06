@@ -8,12 +8,17 @@
       <br />
       <h2><i>No posts match the tag provided!</i></h2>
       {% endif %} {% for post in posts %}
-      <div class="card card-signin my-5">
+      <div class="card card-signin my-3 p-3">
         <div class="card-body">
-          <a href="{{ post.user_name.profile.get_absolute_url }}"><img src="{{ post.user_name.profile.image.url }}"
-              class="rounded-circle" width="30" height="30" alt="" /></a>
-          <a class="text-dark" href="{{ post.user_name.profile.get_absolute_url }}"><b>{{ post.user_name }}</b></a>
-          <br /><small class="text-muted">Posted on {{ post.date_posted }}</small>
+          <a href="{{ post.user_name.profile.get_absolute_url }}">
+            <img src="https://ui-avatars.com/api/?size=128&background=random&name={{ post.user_name }}"
+              class="round-img avatar" alt="" />
+          </a>
+          <a class="text-dark" href="{{ post.user_name.profile.get_absolute_url }}">
+            <b>{{ post.user_name }}</b>
+          </a>
+          <br />
+          <small class="text-muted">Posted on {{ post.date_posted }}</small>
           <br /><br />
           <p class="card-text text-dark">{{ post.description }}</p>
         </div>
@@ -23,6 +28,7 @@
         <p class="text-danger ml-3">
           <b>Tags: <i>{{ post.tags }}</i></b>
         </p>
+        <br />
         {% endif %}
         <div class="card-footer">
           <button class="btn btn-white mr-3 like" id="{{ post.id }}">

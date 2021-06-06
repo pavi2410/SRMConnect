@@ -4,10 +4,11 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8">
+     <h2>People you may know</h2>
       {% if users %}
       {% for user_p in users %}
       <div class="card card-signin my-5 p-3 d-flex">
-        <img src="https://www.europe-together.eu/wp-content/themes/sd/images/user-placeholder.svg" class="rounded mr-2" width="40" height="40" alt="" />
+        <img src="https://ui-avatars.com/api/?size=128&background=random&name={{ user_p }}" class="rounded mr-2" width="40" height="40" alt="" />
         <a class="text-dark mr-2" href="{{ user_p.get_absolute_url }}"><b>{{ user_p }}</b></a>
         {% if not user_p.user in sent %}
         <a class="btn btn-primary mr-2" href="{% url 'send_friend_request' user_p.id %}">Add Friend</a>
@@ -21,8 +22,9 @@
       {% endif %}
     </div>
     <div class="col-md-4">
+      <h2>Your friends</h2>
       <div class="card card-signin my-5 p-3">
-        <img class="card-img-top mr-2" src="https://www.europe-together.eu/wp-content/themes/sd/images/user-placeholder.svg" alt="" />
+        <img class="card-img-top mr-2" src="https://ui-avatars.com/api/?size=128&background=random&name={{ request.user }}" alt="" />
         <div>
           <h3 class="card-title text-center">{{ request.user }}</h3>
           <h4 class="text-center">

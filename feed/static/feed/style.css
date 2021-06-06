@@ -472,7 +472,8 @@ img {
 }
 
 .profile-grid .profile-top img {
-  width: 250px
+  width: 128px;
+  height: 128px;
 }
 
 .profile-grid .profile-top .icons a {
@@ -674,4 +675,9 @@ img {
 
 .mr-2 {
   margin-right: 1rem;
+}
+
+.avatar {
+  height: 64px;
+  width: 64px;
 }

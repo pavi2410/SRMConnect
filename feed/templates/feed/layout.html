@@ -36,7 +36,7 @@
         </form>
         {% endif %}
         <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
-        <a class="nav-item nav-link" href="{% url 'users_list' %}">Add New Friends</a>
+        <!-- <a class="nav-item nav-link" href="{% url 'users_list' %}">Add New Friends</a> -->
         {% if user.is_authenticated %}
         <a class="nav-item nav-link" href="{% url 'friend_list' %}">Friends</a>
         <a class="nav-item nav-link" href="{% url 'my_profile' %}">Profile</a>

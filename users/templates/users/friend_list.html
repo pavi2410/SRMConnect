@@ -11,21 +11,19 @@
   {% if friends %}
   {% for user_p in friends %}
   <div class="profile bg-light">
-    <img class="round-img" src="{{ user_p.image.url }}" alt="" />
+    <img class="round-img avatar" src="https://ui-avatars.com/api/?size=128&background=random&name={{ user_p }}" alt="" />
 
     <div>
       <h2>{{ user_p }}</h2>
-      <p>Developer at Microsoft</p>
-      <p>Seattle, WA</p>
+      <p>{{ user_p.profile.bio }}</p>
+      <p>{{ user_p.profile.location }}</p>
       <a href="{{ user_p.get_absolute_url }}" class="btn btn-primary">View Profile</a>
     </div>
 
     <ul>
       <li class="text-primary"><i class="fas fa-check"></i> HTML</li>
       <li class="text-primary"><i class="fas fa-check"></i> CSS</li>
-      <li class="text-primary">
-        <i class="fas fa-check"></i> JavaScript
-      </li>
+      <li class="text-primary"><i class="fas fa-check"></i> JavaScript</li>
       <li class="text-primary"><i class="fas fa-check"></i> Python</li>
     </ul>
   </div>
@@ -35,5 +33,62 @@
     <i>You have no friends now! Make some new <a href="{% url 'users_list' %}">friends here!</a></i>
   </h5>
   {% endif %}
+
+  <div class="main-content">
+    <div class="container">
+      {% if request.user == u %}
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card card-signin my-3 p-3">
+            <div class="card-body">
+              <h2>Friend Requests Sent ({{ sent_friend_requests.count }})</h2>
+              <hr class="my-2" />
+              {% if not sent_friend_requests %}
+              <h5><i>No sent requests!</i></h5>
+              {% else %}
+              {% for s_request in sent_friend_requests %}
+              <a href="{{ s_request.to_user.profile.get_absolute_url }}">
+                <img src="https://ui-avatars.com/api/?size=128&background=random&name={{ s_request.to_user.username }}"
+                  class="round-img avatar" alt="" />
+              </a>
+              <a href="{{ s_request.to_user.profile.get_absolute_url }}"><b>{{ s_request.to_user.username }}</b></a>
+              <small class="float-right">
+                <a class="btn btn-warning mr-2" href="{% url 'cancel_friend_request' s_request.to_user.id %}">Cancel</a>
+              </small>
+              <br /><br />
+              {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card card-signin my-3 p-3">
+            <div class="card-body">
+              <h2>Friend Requests Received ({{ rec_friend_requests.count }})</h2>
+              <hr class="my-2" />
+              {% if not rec_friend_requests %}
+              <h5><i>No received requests!</i></h5>
+              {% else %} {% for r_request in rec_friend_requests %}
+              <a href="{{ r_request.from_user.profile.get_absolute_url }}">
+                <img src="https://ui-avatars.com/api/?size=128&background=random&name={{ r_request.to_user.username }}"
+                  class="round-img avatar" alt="" />
+              </a>
+              <a class="mr-2 align-middle" href="{{ r_request.from_user.profile.get_absolute_url }}">
+              <b>{{ r_request.from_user.username }}</b>
+              </a>
+              <small class="float-right">
+                <a class="btn btn-success mr-2"
+                  href="/users/friend-request/accept/{{ r_request.from_user.id }}">Accept</a>
+                <a class="btn btn-danger" href="/users/friend-request/delete/{{ r_request.from_user.id }}">Reject</a>
+              </small>
+              <br /><br />
+              {% endfor %} {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
 </div>
 {% endblock %}

@@ -5,7 +5,7 @@
   Dashboard
 </h1>
 <p class="lead"><i class="fas fa-user"></i> Welcome {{ user }}</p>
-<div class="dash-buttons">
+<!-- <div class="dash-buttons">
   <a href="{% url 'edit_profile' %}" class="btn">
     <i class="fas fa-user-circle text-primary"></i> Edit Profile
   </a>
@@ -15,9 +15,9 @@
   <a href="{ url 'add-education' }" class="btn">
     <i class="fas fa-graduation-cap text-primary"></i> Add Education
   </a>
-</div>
+</div> -->
 
-<h2 class="my-2">
+<!-- <h2 class="my-2">
   Experience Credentials
 </h2>
 <table class="table">
@@ -83,7 +83,7 @@
       </td>
     </tr>
   </tbody>
-</table>
+</table> -->
 
 <div class="posts">
   {% for post in posts %}
@@ -135,11 +135,11 @@
   {% endfor %}
 </div>
 
-<div class="my-2">
+<!-- <div class="my-2">
   <button class="btn btn-danger">
     <i class="fas fa-user-minus"></i> Delete My Account
   </button>
-</div>
+</div> -->
 {% endblock %}
 
 {% block content_unauth %}

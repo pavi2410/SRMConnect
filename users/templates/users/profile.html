@@ -9,6 +9,24 @@
     <img class="round-img my-1" src="https://ui-avatars.com/api/?size=128&background=random&name={{ u }}" alt="" />
 
     <h1 class="large">{{ u }}</h1>
+    <div class="dash-buttons">
+      {% if request.user == u %}
+      <a href="{% url 'edit_profile' %}" class="btn">
+        <i class="fas fa-user-circle text-primary"></i> Edit Profile
+      </a>
+      {% else %}
+      {% if button_status == 'not_friend' %}
+      <a class="btn" href="/users/friend-request/send/{{ u.id }}">Add Friend</a>
+      {% elif button_status == 'friend_request_sent' %}
+      <a class="btn btn-warning" href="/users/friend-request/cancel/{{ u.id }}">Cancel Request</a>
+      {% elif button_status == 'friend_request_received' %}
+      <a class="btn btn-success mr-2" href="/users/friend-request/accept/{{ u.id }}">Accept Request</a>
+      <a class="btn btn-danger" href="/users/friend-request/delete/{{ u.id }}">Reject Request</a>
+      {% else %}
+      <a class="btn btn-danger" href="/users/friend/delete/{{ u.id }}">UnFriend</a>
+      {% endif %}
+      {% endif %}
+    </div>
     <p class="lead">{{ u.profile.bio }}</p>
     <p>{{ u.profile.location }}</p>
     <div class="icons my-1">
@@ -27,6 +45,13 @@
       <a href="#">
         <i class="fab fa-instagram fa-2x"></i>
       </a>
+    </div>
+    <div class="mt-3">
+      <span class="heading">{{ u.profile.friends.count }}</span>
+      <span class="description">Friends</span>
+      <span>|</span>
+      <span class="heading">{{ post_count }}</span>
+      <span class="description"><a class="text-white" href="{% url 'user-posts' u.username %}">Posts</a></span>
     </div>
   </div>
   <!-- About -->

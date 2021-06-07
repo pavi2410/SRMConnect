@@ -1,50 +1,48 @@
 {% extends "feed/layout.html" %}
 {% load static %}
 {% block content %}
-<div class="container">
-  <div class="row">
-    <div class="col-md-8">
-      {% if not posts %}
-      <br />
-      <h2><i>No posts match the tag provided!</i></h2>
-      {% endif %} {% for post in posts %}
-      <div class="card card-signin my-3 p-3">
-        <div class="card-body">
-          <a href="{{ post.user_name.profile.get_absolute_url }}">
-            <img src="https://ui-avatars.com/api/?size=128&background=random&name={{ post.user_name }}"
-              class="round-img avatar" alt="" />
-          </a>
-          <a class="text-dark" href="{{ post.user_name.profile.get_absolute_url }}">
-            <b>{{ post.user_name }}</b>
-          </a>
-          <br />
-          <small class="text-muted">Posted on {{ post.date_posted }}</small>
-          <br /><br />
-          <p class="card-text text-dark">{{ post.description }}</p>
-        </div>
-        <a href="{% url 'post-detail' post.id %}"><img class="card-img-top" src="{{ post.pic.url }}" alt="" /></a>
-        {% if post.tags %}
+<div class="row">
+  <div class="col-md-8">
+    {% if not posts %}
+    <br />
+    <h2><i>No posts match the tag provided!</i></h2>
+    {% endif %} {% for post in posts %}
+    <div class="card card-signin my-3 p-3">
+      <div class="card-body">
+        <a href="{{ post.user_name.profile.get_absolute_url }}">
+          <img src="https://ui-avatars.com/api/?size=128&background=random&name={{ post.user_name }}"
+            class="round-img avatar" alt="" />
+        </a>
+        <a class="text-dark" href="{{ post.user_name.profile.get_absolute_url }}">
+          <b>{{ post.user_name }}</b>
+        </a>
         <br />
-        <p class="text-danger ml-3">
-          <b>Tags: <i>{{ post.tags }}</i></b>
-        </p>
-        <br />
-        {% endif %}
-        <div class="card-footer">
-          <button class="btn btn-white mr-3 like" id="{{ post.id }}">
-            {% if post in liked_post %}
-            <a href="{% url 'post-like' %}" style="color: red" id="likebtn{{ post.id }}">
-              Unlike</a>
-            | {{post.likes.count}} {% else %}
-            <a href="{% url 'post-like' %}" style="color: green" id="likebtn{{ post.id }}">
-              Like</a>
-            | {{post.likes.count}} {% endif %}
-          </button>
-          <a class="btn btn-outline-info" href="{% url 'post-detail' post.id %}">Comments | {{ post.details.count }}</a>
-        </div>
+        <small class="text-muted">Posted on {{ post.date_posted }}</small>
+        <br /><br />
+        <p class="card-text text-dark">{{ post.description }}</p>
       </div>
-      {% endfor %}
+      <a href="{% url 'post-detail' post.id %}"><img class="card-img-top" src="{{ post.pic.url }}" alt="" /></a>
+      {% if post.tags %}
+      <br />
+      <p class="text-danger ml-3">
+        <b>Tags: <i>{{ post.tags }}</i></b>
+      </p>
+      <br />
+      {% endif %}
+      <div class="card-footer">
+        <button class="btn btn-white mr-3 like" id="{{ post.id }}">
+          {% if post in liked_post %}
+          <a href="{% url 'post-like' %}" style="color: red" id="likebtn{{ post.id }}">
+            Unlike</a>
+          | {{post.likes.count}} {% else %}
+          <a href="{% url 'post-like' %}" style="color: green" id="likebtn{{ post.id }}">
+            Like</a>
+          | {{post.likes.count}} {% endif %}
+        </button>
+        <a class="btn btn-outline-info" href="{% url 'post-detail' post.id %}">Comments | {{ post.details.count }}</a>
+      </div>
     </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

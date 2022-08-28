@@ -6,7 +6,7 @@ This was the project we made for the Software Engineering and Project Management
 ### Team mates:
 - [Pavitra](https://github.com/pavi2410)
 - [Kusum](https://github.com/KushGrandhi)
-- Dinesh
+- [Dinesh](https://github.com/dineshvarma18)
 
 ### Screenshots
 
